@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <label for="ask">Ask to ChatGPT</label>
+        <input id="ask" type="text" value="O que é o GPT-3-turbo?" />
+        <button id="btnAsk">Ask</button>
+        <div id="response"></div>
+    </body>
+
+    <script>
+        document.getElementById("btnAsk").addEventListener('click', async () => {
+            document.getElementById("btnAsk").disabled = true
+            try {
+                const response = await fetch('http://localhost:3000/rest?question=' + document.getElementById("ask").value)
+                const json = await response.json()
+                document.getElementById("response").innerHTML = json.answer
+            } catch (error) {
+                console.log(error)
+            } finally {
+                document.getElementById("btnAsk").disabled = false
+            }
+        })
+    </script>
+</html>
